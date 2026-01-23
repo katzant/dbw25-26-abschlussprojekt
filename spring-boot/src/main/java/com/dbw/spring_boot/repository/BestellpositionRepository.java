@@ -1,5 +1,7 @@
 package com.dbw.spring_boot.repository;
 
+import com.dbw.spring_boot.model.Bestellposition;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +12,26 @@ public class BestellpositionRepository {
 
     public BestellpositionRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public Bestellposition findById(int id) {
+        String sql = "SELECT bestellposition.position_id, bestellposition.bestellung_id, " +
+                "bestellposition.sku, bestellposition.menge, (bestellposition.menge * produkt.preis) AS gesamtpreis " +
+                "FROM bestellposition JOIN produkt " +
+                "ON bestellposition.sku = produkt.sku " +
+                "WHERE bestellposition.position_id = ?";
+        try {
+            Bestellposition bestellposition = jdbcTemplate.queryForObject(sql, (rs, row) ->
+                    new Bestellposition(
+                            rs.getInt("position_id"),
+                            rs.getInt("bestellung_id"),
+                            rs.getString("sku"),
+                            rs.getInt("menge"),
+                            rs.getDouble("gesamtpreis")
+                    ), id);
+            return bestellposition;
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 }
