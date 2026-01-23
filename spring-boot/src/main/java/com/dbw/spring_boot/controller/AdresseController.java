@@ -28,4 +28,14 @@ public class AdresseController {
         return ResponseEntity.ok("Adresse wurde hinzugefügt");
     }
 
+    @PutMapping("/adressen")
+    public ResponseEntity<?> updateAdresseFromId(@RequestBody Adresse adresse) {
+        if (adresseRepository.findbyId(adresse.getAdresseId()) == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            adresseRepository.updateAdresse(adresse.getAdresseId(), adresse);
+            return ResponseEntity.ok("Adresse wurde aktualisiert");
+        }
+    }
+
 }

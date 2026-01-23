@@ -68,4 +68,12 @@ public class AdresseRepository {
         jdbcTemplate.update(sql, adresse.isAktiv(), adresse.getStrasse(),adresse.getHausnummer(),
                 adresse.getPlz(), adresse.getOrt(), adresse.getLand());
     }
+
+    public void updateAdresse(int adresseId, Adresse adresse) {
+        String sql ="UPDATE adresse SET aktiv = ?, strasse = ?, hausnummer = ?, " +
+                "plz = ?, ort = ?, land = ? WHERE adresse_id = ?";
+        jdbcTemplate.update(sql, adresse.isAktiv(), adresse.getStrasse(),
+                adresse.getHausnummer(), adresse.getPlz(), adresse.getOrt(), adresse.getLand(),
+                adresseId);
+    }
 }
