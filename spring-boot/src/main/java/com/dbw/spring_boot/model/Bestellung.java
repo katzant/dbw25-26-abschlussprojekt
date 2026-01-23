@@ -8,14 +8,17 @@ public class Bestellung {
     private final int bestellungId;
     private final int kundeId;
     private final int personalNr;
-    private final LocalDateTime datum;
-    private final List<Bestellposition> positionen;
+    private final String datum;
+    private final String status;
+    private final List<BestellpositionDaten> positionen;
 
-    public Bestellung(int bestellungId, int kundeId, int personalNr, LocalDateTime datum, List<Bestellposition> positionen) {
+    public Bestellung(int bestellungId, int kundeId, int personalNr, String datum,
+                      String status, List<BestellpositionDaten> positionen) {
         this.bestellungId = bestellungId;
         this.kundeId = kundeId;
         this.personalNr = personalNr;
         this.datum = datum;
+        this.status = status;
         this.positionen = positionen;
     }
 
@@ -31,11 +34,15 @@ public class Bestellung {
         return personalNr;
     }
 
-    public LocalDateTime getDatum() {
+    public String getDatum() {
         return datum;
     }
 
-    public List<Bestellposition> getPositionen() {
+    public String getStatus() {
+        return status;
+    }
+
+    public List<BestellpositionDaten> getPositionen() {
         return positionen;
     }
 }
