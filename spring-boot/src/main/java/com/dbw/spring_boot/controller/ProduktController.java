@@ -37,4 +37,13 @@ public class ProduktController {
         produktRepository.save(produkt);
         return ResponseEntity.ok("Produkt wurde hinzugefügt");
     }
+
+    @DeleteMapping("/produkte")
+    public ResponseEntity<?> deleteProdukt(@RequestParam String sku) {
+        if (produktRepository.findBySku(sku) == null) {
+            return ResponseEntity.badRequest().body("Sku gehört zu keinem gültigen Produkt");
+        }
+        produktRepository.deleteBySku(sku);
+        return ResponseEntity.ok("Produkt wurde gelöscht");
+    }
 }

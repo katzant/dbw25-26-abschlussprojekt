@@ -37,4 +37,9 @@ public class ProduktRepository {
         jdbcTemplate.update(sql, produkt.getSku(), produkt.getName(), produkt.getPreis(),
                 produkt.getLagerbestand(), produkt.getAngelegtVon());
     }
+
+    public void deleteBySku(String sku) {
+        String sql = "DELETE FROM produkt WHERE sku = ?";
+        jdbcTemplate.update(sql, sku);
+    }
 }
