@@ -2,13 +2,13 @@ package com.dbw.spring_boot.model;
 
 public class Produkt {
 
-    private final int sku;
+    private final String sku;
     private final String name;
     private final double preis;
     private final int lagerbestand;
     private final int angelegtVon;
 
-    public Produkt(int sku, String name, double preis, int lagerbestand, int angelegtVon) {
+    public Produkt(String sku, String name, double preis, int lagerbestand, int angelegtVon) {
         this.sku = sku;
         this.name = name;
         this.preis = preis;
@@ -16,7 +16,7 @@ public class Produkt {
         this.angelegtVon = angelegtVon;
     }
 
-    public int getSku() {
+    public String getSku() {
         return sku;
     }
 
