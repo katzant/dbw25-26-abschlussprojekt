@@ -61,4 +61,11 @@ public class AdresseRepository {
             return null;
         }
     }
+
+    public void save(Adresse adresse) {
+        String sql = "INSERT INTO adresse (aktiv, strasse, hausnummer, plz, ort, land) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, adresse.isAktiv(), adresse.getStrasse(),adresse.getHausnummer(),
+                adresse.getPlz(), adresse.getOrt(), adresse.getLand());
+    }
 }

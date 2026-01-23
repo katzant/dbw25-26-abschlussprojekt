@@ -3,9 +3,7 @@ package com.dbw.spring_boot.controller;
 import com.dbw.spring_boot.model.Adresse;
 import com.dbw.spring_boot.repository.AdresseRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdresseController {
@@ -22,6 +20,12 @@ public class AdresseController {
         if (adresse != null) {
             return ResponseEntity.ok(adresse);
         } else return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/adressen")
+    public ResponseEntity<?> addAdresse(@RequestBody Adresse adresse) {
+        adresseRepository.save(adresse);
+        return ResponseEntity.ok("Adresse wurde hinzugefügt");
     }
 
 }
