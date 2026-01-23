@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 public class BestellpositionRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final ProduktRepository produktRepository;
 
-    public BestellpositionRepository(JdbcTemplate jdbcTemplate) {
+    public BestellpositionRepository(JdbcTemplate jdbcTemplate, ProduktRepository produktRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.produktRepository = produktRepository;
     }
 
     public Bestellposition findById(int id) {
@@ -33,5 +35,13 @@ public class BestellpositionRepository {
         } catch (DataAccessException e) {
             return null;
         }
+    }
+
+    public void save(Bestellposition bestellposition) {
+        String sql = "INSERT INTO bestellposition (bestellung_id, sku, menge) " +
+                "VALUES (?, ?, ?)";
+                produktRepository.findBySku(bestellposition.getProduktSku()).getPreis();
+        jdbcTemplate.update(sql, bestellposition.getBestellungId(),
+                bestellposition.getProduktSku(), bestellposition.getMenge());
     }
 }
