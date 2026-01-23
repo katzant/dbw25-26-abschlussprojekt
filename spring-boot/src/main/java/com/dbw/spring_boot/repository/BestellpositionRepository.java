@@ -44,4 +44,9 @@ public class BestellpositionRepository {
         jdbcTemplate.update(sql, bestellposition.getBestellungId(),
                 bestellposition.getProduktSku(), bestellposition.getMenge());
     }
+
+    public void deleteByPositionId(int positionId) {
+        String sql = "DELETE FROM bestellposition WHERE position_id = ?";
+        jdbcTemplate.update(sql, positionId);
+    }
 }

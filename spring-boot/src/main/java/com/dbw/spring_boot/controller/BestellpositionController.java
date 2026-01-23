@@ -34,4 +34,14 @@ public class BestellpositionController {
         bestellpositionRepository.save(bestellposition);
         return ResponseEntity.ok(bestellposition);
     }
+
+    @DeleteMapping("/bestellpositionen")
+    public ResponseEntity<?> deleteBestellposition(int positionId) {
+        if (bestellpositionRepository.findById(positionId) == null) {
+            return ResponseEntity.badRequest().body("Bestellposition wurde nicht gefunden");
+        } else {
+            bestellpositionRepository.deleteByPositionId(positionId);
+            return ResponseEntity.ok("Bestellposition wurde gelöscht");
+        }
+    }
 }
