@@ -30,4 +30,11 @@ public class ProduktRepository {
             return null;
         }
     }
+
+    public void save(Produkt produkt){
+        String sql = "INSERT INTO produkt (sku, name, preis, lagerbestand, angelegt_von) " +
+                "VALUES (?, ?, ?, ? ,?)";
+        jdbcTemplate.update(sql, produkt.getSku(), produkt.getName(), produkt.getPreis(),
+                produkt.getLagerbestand(), produkt.getAngelegtVon());
+    }
 }
