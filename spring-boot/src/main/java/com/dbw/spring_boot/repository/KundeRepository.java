@@ -87,7 +87,7 @@ public class KundeRepository {
     public void updateKunde(int kundeId, Kunde kunde) {
         String sql = "UPDATE kunde SET email = ?, vorname = ?, nachname = ?, " +
                 "passwort = ? WHERE kunde_id = ?";
-        jdbcTemplate.update(sql, kunde.email, kunde.vorname, kunde.nachname,
-                kunde.passwort, kundeId);
+        jdbcTemplate.update(sql, kunde.getEmail(), kunde.getVorname(), kunde.getNachname(),
+                kunde.getPasswort(), kundeId);
     }
 }

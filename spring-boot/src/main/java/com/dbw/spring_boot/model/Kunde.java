@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Kunde {
 
-    public final int kundeId;
-    public final String email;
-    public final String passwort;
-    public final String vorname;
-    public final String nachname;
-    public final List<AdresseTypDaten> adressen;
+    private final int kundeId;
+    private final String email;
+    private final String passwort;
+    private final String vorname;
+    private final String nachname;
+    private final List<AdresseTypDaten> adressen;
 
     public Kunde(int kundeId, String email, String vorname, String nachname, String passwort, List<AdresseTypDaten> adressen) {
         this.kundeId = kundeId;
