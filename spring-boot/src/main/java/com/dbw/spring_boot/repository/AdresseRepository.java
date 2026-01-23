@@ -2,6 +2,7 @@ package com.dbw.spring_boot.repository;
 
 import com.dbw.spring_boot.model.Adresse;
 import com.dbw.spring_boot.model.AdresseTypDaten;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -40,5 +41,24 @@ public class AdresseRepository {
         }, kundeId);
 
         return adressen;
+    }
+
+    public Adresse findbyId(int adresseId) {
+        String sql = "SELECT * FROM adresse WHERE adresse_id = ?";
+        try {
+            Adresse adresse = jdbcTemplate.queryForObject(sql, (rs, row) ->
+                    new Adresse(
+                            rs.getInt("adresse_id"),
+                            rs.getBoolean("aktiv"),
+                            rs.getString("strasse"),
+                            rs.getString("hausnummer"),
+                            rs.getInt("plz"),
+                            rs.getString("ort"),
+                            rs.getString("land")
+                    ), adresseId);
+            return adresse;
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 }
