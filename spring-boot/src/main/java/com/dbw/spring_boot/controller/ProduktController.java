@@ -46,4 +46,15 @@ public class ProduktController {
         produktRepository.deleteBySku(sku);
         return ResponseEntity.ok("Produkt wurde gelöscht");
     }
+
+    @PatchMapping("/produkte")
+    public ResponseEntity<?> updateLagerbestand(@RequestParam String sku,
+                                                @RequestParam int lagerbestand) {
+        if (produktRepository.findBySku(sku) == null) {
+            return ResponseEntity.badRequest().body("Produkt wurde nicht gefunden");
+        } else {
+            produktRepository.updateLagerbestand(sku, lagerbestand);
+            return ResponseEntity.ok("Produkt wurde aktualisiert");
+        }
+    }
 }

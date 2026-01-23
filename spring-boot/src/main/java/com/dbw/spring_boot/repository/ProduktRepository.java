@@ -42,4 +42,9 @@ public class ProduktRepository {
         String sql = "DELETE FROM produkt WHERE sku = ?";
         jdbcTemplate.update(sql, sku);
     }
+
+    public void updateLagerbestand(String sku, int lagerbestand) {
+        String sql = "UPDATE produkt SET lagerbestand = ? WHERE sku = ?";
+        jdbcTemplate.update(sql, lagerbestand, sku);
+    }
 }
