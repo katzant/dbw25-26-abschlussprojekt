@@ -1,6 +1,7 @@
 package com.dbw.spring_boot.controller;
 
 import com.dbw.spring_boot.model.ReportKunde;
+import com.dbw.spring_boot.model.ReportMitarbeiter;
 import com.dbw.spring_boot.model.ReportProdukt;
 import com.dbw.spring_boot.repository.ReportRepository;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,11 @@ public class ReportController {
     public ResponseEntity<?> getVerkaufszahlen() {
         List<ReportProdukt> reportProdukte = reportRepository.findAllReportProdukte();
         return ResponseEntity.ok(reportProdukte);
+    }
+
+    @GetMapping("/report/mitarbeiter/uebersicht")
+    public ResponseEntity<?> getMitarbeiterUebersicht() {
+        List<ReportMitarbeiter> reportMitarbeiter = reportRepository.findAllReportMitarbeiter();
+        return ResponseEntity.ok(reportMitarbeiter);
     }
 }

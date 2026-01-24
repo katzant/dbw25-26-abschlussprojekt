@@ -1,6 +1,7 @@
 package com.dbw.spring_boot.repository;
 
 import com.dbw.spring_boot.model.ReportKunde;
+import com.dbw.spring_boot.model.ReportMitarbeiter;
 import com.dbw.spring_boot.model.ReportProdukt;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -42,5 +43,18 @@ public class ReportRepository {
                         rs.getInt("anzahl_bestellungen")
                 ));
         return reportProdukte;
+    }
+
+    public List<ReportMitarbeiter> findAllReportMitarbeiter() {
+        String sql = "SELECT personal_nr, anzahl_verwalteter_bestellungen, anzahl_angelegter_produkte " +
+                "FROM v_mitarbeiter_uebersicht";
+
+        List<ReportMitarbeiter> reportMitarbeiter = jdbcTemplate.query(sql, (rs, row) ->
+                new ReportMitarbeiter(
+                        rs.getInt("personal_nr"),
+                        rs.getInt("anzahl_verwalteter_bestellungen"),
+                        rs.getInt("anzahl_angelegter_produkte")
+                ));
+        return reportMitarbeiter;
     }
 }
