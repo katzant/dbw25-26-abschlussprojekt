@@ -2,13 +2,13 @@ package com.dbw.spring_boot.model;
 
 public class Mitarbeiter {
 
-    private final int personalNr;
+    private final Integer personalNr;
     private final String passwort;
     private final String email;
     private final String vorname;
     private final String nachname;
 
-    public Mitarbeiter(int personalNr, String passwort, String email, String vorname, String nachname) {
+    public Mitarbeiter(Integer personalNr, String passwort, String email, String vorname, String nachname) {
         this.personalNr = personalNr;
         this.passwort = passwort;
         this.email = email;
@@ -16,7 +16,7 @@ public class Mitarbeiter {
         this.nachname = nachname;
     }
 
-    public int getPersonalNr() {
+    public Integer getPersonalNr() {
         return personalNr;
     }
 
