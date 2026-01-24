@@ -198,7 +198,15 @@ FROM produkt
 GROUP BY produkt.sku, produkt.name
 ORDER BY gesamt_verkaufte_menge DESC;
 
-
+CREATE VIEW v_mitarbeiter_uebersicht AS
+SELECT mitarbeiter.personal_nr,
+       COUNT(DISTINCT bestellung.bestellung_id) AS anzahl_verwalteter_bestellungen,
+       COUNT(DISTINCT produkt.sku) AS anzahl_angelegter_produkte
+FROM mitarbeiter
+    LEFT JOIN bestellung ON mitarbeiter.personal_nr = bestellung.mitarbeiterzuweis
+    LEFT JOIN produkt ON mitarbeiter.personal_nr = produkt.angelegt_von
+GROUP BY mitarbeiter.personal_nr
+ORDER BY personal_nr
 
 
 
