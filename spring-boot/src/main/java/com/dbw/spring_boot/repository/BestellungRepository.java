@@ -66,4 +66,11 @@ public class BestellungRepository {
             return null;
         }
     }
+
+    public void save(Bestellung bestellung) {
+        String sql = "INSERT INTO bestellung (kunde_id, mitarbeiterzuweis, datum, status) " +
+                "VALUES (?, ?, ?::timestamp, ?)";
+        jdbcTemplate.update(sql, bestellung.getKundeId(), bestellung.getPersonalNr(),
+                bestellung.getDatum(), bestellung.getStatus());
+    }
 }

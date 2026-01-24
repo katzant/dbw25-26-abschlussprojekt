@@ -3,9 +3,7 @@ package com.dbw.spring_boot.controller;
 import com.dbw.spring_boot.model.Bestellung;
 import com.dbw.spring_boot.repository.BestellungRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BestellungController {
@@ -23,5 +21,11 @@ public class BestellungController {
         if (bestellung != null) {
             return ResponseEntity.ok(bestellung);
         } else return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/bestellungen")
+    public ResponseEntity<?> addBestellung(@RequestBody Bestellung bestellung) {
+        bestellungRepository.save(bestellung);
+        return ResponseEntity.ok("Bestellung wurde hinzugefügt");
     }
 }
