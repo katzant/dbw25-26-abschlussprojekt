@@ -179,6 +179,7 @@ FROM kunde
     LEFT JOIN bestellposition ON bestellung.bestellung_id = bestellposition.bestellung_id
     LEFT JOIN produkt ON bestellposition.sku = produkt.sku
 GROUP BY kunde.kunde_id, kunde.email
+ORDER BY kunde.kunde_id
 
 
 
