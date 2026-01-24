@@ -173,13 +173,30 @@ SELECT kunde.kunde_id,
            kunde.email,
            COUNT (bestellung.bestellung_id) AS anzahl,
            CASE WHEN SUM(bestellposition.menge * produkt.preis) ISNULL THEN 0
-                ELSE SUM(bestellposition.menge * produkt.preis) END AS summe
+                ELSE SUM(bestellposition.menge * produkt.preis)
+           END AS summe
 FROM kunde
     LEFT JOIN bestellung ON kunde.kunde_id = bestellung.kunde_id
     LEFT JOIN bestellposition ON bestellung.bestellung_id = bestellposition.bestellung_id
     LEFT JOIN produkt ON bestellposition.sku = produkt.sku
 GROUP BY kunde.kunde_id, kunde.email
-ORDER BY kunde.kunde_id
+ORDER BY kunde.kunde_id;
+
+CREATE VIEW v_produkt_verkaufszahlen AS
+SELECT produkt.sku,
+       produkt.name,
+       SUM(CASE WHEN bestellung.status
+           NOT IN ('neu', 'storniert') THEN bestellposition.menge ELSE 0 END)
+       AS gesamt_verkaufte_menge,
+       SUM(CASE WHEN bestellung.status
+           NOT IN ('neu', 'storniert') THEN (bestellposition.menge * produkt.preis)
+           ELSE 0 END) AS umsatz,
+       COUNT(DISTINCT bestellposition.bestellung_id) AS anzahl_bestellungen
+FROM produkt
+    LEFT JOIN bestellposition ON produkt.sku = bestellposition.sku
+    LEFT JOIN bestellung ON bestellposition.bestellung_id = bestellung.bestellung_id
+GROUP BY produkt.sku, produkt.name
+ORDER BY gesamt_verkaufte_menge DESC;
 
 
 
