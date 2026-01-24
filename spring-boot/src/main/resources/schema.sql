@@ -163,9 +163,23 @@ EXECUTE FUNCTION storniert_produkte_zurueckstellen();
 
 
 
-
 -----------------
--- Aufgabe 5
+-- Aufgabe 6
+
+
+
+CREATE VIEW v_kunde_summe_anzahl_bestellungen AS
+SELECT kunde.kunde_id,
+           kunde.email,
+           COUNT (bestellung.bestellung_id) AS anzahl,
+           CASE WHEN SUM(bestellposition.menge * produkt.preis) ISNULL THEN 0
+                ELSE SUM(bestellposition.menge * produkt.preis) END AS summe
+FROM kunde
+    LEFT JOIN bestellung ON kunde.kunde_id = bestellung.kunde_id
+    LEFT JOIN bestellposition ON bestellung.bestellung_id = bestellposition.bestellung_id
+    LEFT JOIN produkt ON bestellposition.sku = produkt.sku
+GROUP BY kunde.kunde_id, kunde.email
+
 
 
 
