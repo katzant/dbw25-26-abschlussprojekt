@@ -206,7 +206,20 @@ FROM mitarbeiter
     LEFT JOIN bestellung ON mitarbeiter.personal_nr = bestellung.mitarbeiterzuweis
     LEFT JOIN produkt ON mitarbeiter.personal_nr = produkt.angelegt_von
 GROUP BY mitarbeiter.personal_nr
-ORDER BY personal_nr
+ORDER BY personal_nr;
 
-
+CREATE VIEW v_mitarbeiter_bestellstatus_uebersicht AS
+SELECT mitarbeiter.personal_nr,
+       status_zustand.status_current AS bestellstatus,
+       COUNT(bestellung.bestellung_id) as anzahl_bestellungen_mit_status
+FROM mitarbeiter
+    INNER JOIN( VALUES ('neu'),
+                       ('bezahlt'),
+                       ('versendet'),
+                       ('abgeschlossen'),
+                       ('storniert')) status_zustand(status_current) ON TRUE=TRUE
+    LEFT JOIN bestellung ON mitarbeiter.personal_nr = bestellung.mitarbeiterzuweis
+                        AND status_zustand.status_current = bestellung.status
+GROUP BY mitarbeiter.personal_nr, status_zustand.status_current
+ORDER BY mitarbeiter.personal_nr, status_zustand.status_current;
 
