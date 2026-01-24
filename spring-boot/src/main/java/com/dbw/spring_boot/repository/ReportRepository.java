@@ -1,5 +1,6 @@
 package com.dbw.spring_boot.repository;
 
+import com.dbw.spring_boot.model.ReportBestellstatus;
 import com.dbw.spring_boot.model.ReportKunde;
 import com.dbw.spring_boot.model.ReportMitarbeiter;
 import com.dbw.spring_boot.model.ReportProdukt;
@@ -56,5 +57,18 @@ public class ReportRepository {
                         rs.getInt("anzahl_angelegter_produkte")
                 ));
         return reportMitarbeiter;
+    }
+
+    public List<ReportBestellstatus> findAllReportBestellstatus() {
+        String sql = "SELECT personal_nr, bestellstatus, anzahl_bestellungen_mit_status " +
+                "FROM v_mitarbeiter_bestellstatus_uebersicht";
+
+        List<ReportBestellstatus> reportBestellstatus = jdbcTemplate.query(sql, (rs, row) ->
+                new ReportBestellstatus(
+                        rs.getInt("personal_nr"),
+                        rs.getString("bestellstatus"),
+                        rs.getInt("anzahl_bestellungen_mit_status")
+                ));
+        return reportBestellstatus;
     }
 }
