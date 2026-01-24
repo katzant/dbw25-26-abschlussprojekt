@@ -28,4 +28,13 @@ public class BestellungController {
         bestellungRepository.save(bestellung);
         return ResponseEntity.ok("Bestellung wurde hinzugefügt");
     }
+
+    @DeleteMapping("/bestellungen")
+    public ResponseEntity<?> deleteBestellung(@RequestParam int id) {
+        if (bestellungRepository.findById(id) == null) {
+            return ResponseEntity.badRequest().body("Id gehört zu keinem gültigen Produkt");
+        }
+        bestellungRepository.deleteById(id);
+        return ResponseEntity.ok("Bestellung wurde gelöscht");
+    }
 }

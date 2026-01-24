@@ -73,4 +73,9 @@ public class BestellungRepository {
         jdbcTemplate.update(sql, bestellung.getKundeId(), bestellung.getPersonalNr(),
                 bestellung.getDatum(), bestellung.getStatus());
     }
+
+    public void deleteById(int id) {
+        String sql = "DELETE FROM bestellung WHERE bestellung_id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
