@@ -4,14 +4,14 @@ import java.util.List;
 
 public class Kunde {
 
-    private final int kundeId;
+    private final Integer kundeId;
     private final String email;
     private final String passwort;
     private final String vorname;
     private final String nachname;
     private final List<AdresseTypDaten> adressen;
 
-    public Kunde(int kundeId, String email, String vorname, String nachname, String passwort, List<AdresseTypDaten> adressen) {
+    public Kunde(Integer kundeId, String email, String vorname, String nachname, String passwort, List<AdresseTypDaten> adressen) {
         this.kundeId = kundeId;
         this.email = email;
         this.passwort = passwort;
@@ -20,7 +20,7 @@ public class Kunde {
         this.adressen = adressen;
     }
 
-    public int getKundeId() {
+    public Integer getKundeId() {
         return kundeId;
     }
 
