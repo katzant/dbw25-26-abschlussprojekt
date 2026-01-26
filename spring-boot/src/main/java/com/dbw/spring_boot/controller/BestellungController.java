@@ -5,6 +5,8 @@ import com.dbw.spring_boot.repository.BestellungRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class BestellungController {
 
@@ -15,12 +17,16 @@ public class BestellungController {
     }
 
     @GetMapping("/bestellungen")
-    public ResponseEntity<Bestellung> getBestellung(@RequestParam int id) {
-        System.out.println("SUCHE BESTELLUNG   " + id);
-        Bestellung bestellung = bestellungRepository.findById(id);
-        if (bestellung != null) {
-            return ResponseEntity.ok(bestellung);
-        } else return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> getBestellung(@RequestParam(required = false) Integer id) {
+        if (id != null) {
+            Bestellung bestellung = bestellungRepository.findById(id);
+            if (bestellung != null) {
+                return ResponseEntity.ok(bestellung);
+            } else return ResponseEntity.badRequest().build();
+        } else {
+            List<Bestellung> bestellungen = bestellungRepository.findAll();
+            return ResponseEntity.ok(bestellungen);
+        }
     }
 
     @PostMapping("/bestellungen")

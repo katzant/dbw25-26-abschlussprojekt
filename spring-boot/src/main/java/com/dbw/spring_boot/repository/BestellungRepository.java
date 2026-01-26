@@ -19,6 +19,47 @@ public class BestellungRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public List<Bestellung> findAll() {
+        String sqlBestellpositionen = "SELECT bestellposition.position_id, bestellposition.bestellung_id, " +
+                "bestellposition.menge, produkt.sku, produkt.name, produkt.preis, produkt.lagerbestand, " +
+                "produkt.angelegt_von, (bestellposition.menge * produkt.preis) AS gesamtpreis " +
+                "FROM bestellposition " +
+                "JOIN produkt ON bestellposition.sku = produkt.sku";
+
+        List<BestellpositionDaten> bestellpositionen = jdbcTemplate.query(sqlBestellpositionen,
+                (rs, row) -> {
+                    Produkt produkt = new Produkt(
+                            rs.getString("sku"),
+                            rs.getString("name"),
+                            rs.getDouble("preis"),
+                            rs.getInt("lagerbestand"),
+                            rs.getInt("angelegt_von")
+                    );
+                    BestellpositionDaten bestellposition = new BestellpositionDaten(
+                            rs.getInt("position_id"),
+                            rs.getInt("bestellung_id"),
+                            produkt,
+                            rs.getInt("menge"),
+                            rs.getDouble("gesamtpreis")
+                    );
+                    return bestellposition;
+                });
+
+        String sqlBestellung = "SELECT bestellung_id, kunde_id, mitarbeiterzuweis, datum, status" +
+                " FROM bestellung";
+
+        List<Bestellung> bestellungen = jdbcTemplate.query(sqlBestellung, (rs, row) ->
+                new Bestellung(
+                        rs.getInt("bestellung_id"),
+                        rs.getInt("kunde_id"),
+                        rs.getInt("mitarbeiterzuweis"),
+                        rs.getString("datum"),
+                        rs.getString("status"),
+                        bestellpositionen
+                ));
+        return bestellungen;
+    }
+
     public Bestellung findById(int id) {
         String sqlBestellpositionen = "SELECT bestellposition.position_id, bestellposition.bestellung_id, " +
                 "bestellposition.menge, produkt.sku, produkt.name, produkt.preis, produkt.lagerbestand, " +
