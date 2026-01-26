@@ -6,6 +6,8 @@ import com.dbw.spring_boot.repository.ProduktRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProduktController {
 
@@ -18,11 +20,16 @@ public class ProduktController {
     }
 
     @GetMapping("/produkte")
-    public ResponseEntity<?> getProdukt(@RequestParam String sku) {
-        Produkt produkt = produktRepository.findBySku(sku);
-        if (produkt != null) {
-            return ResponseEntity.ok(produkt);
-        } else return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> getProdukt(@RequestParam(required = false) String sku) {
+        if (sku != null) {
+            Produkt produkt = produktRepository.findBySku(sku);
+            if (produkt != null) {
+                return ResponseEntity.ok(produkt);
+            } else return ResponseEntity.badRequest().build();
+        } else {
+            List<Produkt> produkte = produktRepository.findAll();
+            return ResponseEntity.ok(produkte);
+        }
     }
 
     @PostMapping("/produkte")

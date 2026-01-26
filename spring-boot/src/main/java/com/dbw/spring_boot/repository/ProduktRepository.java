@@ -5,6 +5,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ProduktRepository {
 
@@ -12,6 +14,19 @@ public class ProduktRepository {
 
     public ProduktRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public List<Produkt> findAll() {
+        String sql = "SELECT * FROM produkt";
+        List<Produkt> produkte = jdbcTemplate.query(sql, (rs, row) ->
+                new Produkt(
+                        rs.getString("sku"),
+                        rs.getString("name"),
+                        rs.getDouble("preis"),
+                        rs.getInt("lagerbestand"),
+                        rs.getInt("angelegt_von")
+                ));
+        return produkte;
     }
 
     public Produkt findBySku(String sku) {
