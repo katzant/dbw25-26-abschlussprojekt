@@ -1,9 +1,8 @@
-
+/*
 TRUNCATE TABLE adresse, kunde, mitarbeiter, bestellung, bestellposition, produkt, kunde_hat_adressen RESTART IDENTITY CASCADE;
+*/
 
---TRUNCATE TABLE adresse, kunde, kunde_hat_adressen, mitarbeiter RESTART IDENTITY CASCADE;
-
-
+/*
 INSERT INTO adresse (aktiv, strasse, hausnummer, plz, ort, land) VALUES
 (true,  'Hauptstrasse',       '12',  10115, 'Berlin',    'Deutschland'),
 (true,  'Bahnhofweg',         '7a',  80331, 'Muenchen',  'Deutschland'),
@@ -19,8 +18,9 @@ INSERT INTO adresse (aktiv, strasse, hausnummer, plz, ort, land) VALUES
 (false,  'Heinrichweg',       '22a', 92083, 'Koeln',     'Deutschland'),
 (false,  'Informatikweg',     '8b',  34217, 'Frankfurt', 'Deutschland'),
 (false,  'Dbstrasse',         '42',  78312, 'Dbburg',    'Deutschland');
+*/
 
-
+/*
 INSERT INTO kunde (email, vorname, nachname, passwort) VALUES
 ('123@test.db',     'Max',   'Muster',   'max12!'),
 ('1_1@firma.db',    'Anna',  'Schmidt',  'anna!1'),
@@ -32,7 +32,9 @@ INSERT INTO kunde (email, vorname, nachname, passwort) VALUES
 ('67@service.db',   'Maria', 'Keller',   'mari@67'),
 ('_78@portal.db',   'Jonas', 'Becker',   'jonas78!'),
 ('555@system.db',   'Nina',  'Hoffmann', 'nina!555');
+*/
 
+/*
 INSERT INTO kunde_hat_adressen (adresse_id, kunde_id, typ) VALUES
 (1, 1,  'Lieferadresse'),
 (2, 1,  'Rechnungsadresse'),
@@ -59,9 +61,9 @@ INSERT INTO kunde_hat_adressen (adresse_id, kunde_id, typ) VALUES
 (11,9,  'Lieferadresse'),
 (9, 10, 'Lieferadresse'),
 (10,10, 'Rechnungsadresse');
+*/
 
-
-
+/*
 INSERT INTO mitarbeiter (vorname, nachname, email, passwort) VALUES
 ('Anna', 'Meier',   'anna.meier@firma.db',   'a#123'),
 ('Zoe',  'Schmidt', 'zoe.schmidt@firma.db',  'Z!2bc'),
@@ -73,9 +75,9 @@ INSERT INTO mitarbeiter (vorname, nachname, email, passwort) VALUES
 ('Peter','Wolf',    'peter.wolf@firma.db',   'P*abc9'),
 ('Tom',  'Neumann', 'tom.neumann@firma.db',  '7+Tes'),
 ('Lena', 'Koch',    'lena.koch@firma.db',    'A=999aaasdAASDASD');
+*/
 
-
-
+/*
 INSERT INTO bestellung (kunde_id, mitarbeiterzuweis, datum, status) VALUES
 (1,  1,  '2026-01-10 10:15:01+01', 'neu'),
 (2,  2,  '2026-01-11 11:30:02+01', 'bezahlt'),
@@ -84,12 +86,12 @@ INSERT INTO bestellung (kunde_id, mitarbeiterzuweis, datum, status) VALUES
 (5,  5,  '2025-12-25 16:00:05+01', 'neu'),
 (6,  6,  '2025-12-26 13:10:06+01', 'bezahlt'),
 (7,  7,  '2025-12-27 08:55:07+01', 'versendet'),
-(8,  8,  '2025-12-29 17:40:08+01', 'neu'), -------------
+(8,  8,  '2025-12-29 17:40:08+01', 'storniert'),
 (9,  9,  '2026-01-01 12:25:09+01', 'neu'),
 (10, 10, '2026-01-02 15:05:10+01', 'abgeschlossen');
+*/
 
-
-
+/*
 INSERT INTO produkt (sku, name, preis, lagerbestand, angelegt_von) VALUES
 ('SKU-1001', 'Notebook Basic',      699.99,  7,  1),
 ('SKU-1002', 'Notebook Pro',        1299.00, 8,  2),
@@ -101,9 +103,9 @@ INSERT INTO produkt (sku, name, preis, lagerbestand, angelegt_von) VALUES
 ('SKU-1008', 'Maus Wireless',       49.95,   10, 8),
 ('SKU-1009', 'USB-C Dockingstation',189.00,  14, 9),
 ('SKU-1010', 'Headset Noise Cancel',79.99,   5,  10);
+*/
 
-
-
+/*
 INSERT INTO bestellposition (sku, bestellung_id, menge) VALUES
 ('SKU-1001', 1,  5),
 ('SKU-1002', 1,  2),
@@ -124,5 +126,4 @@ INSERT INTO bestellposition (sku, bestellung_id, menge) VALUES
 ('SKU-1006', 9,  2),
 ('SKU-1008', 9,  1),
 ('SKU-1010', 10, 1);
-
-UPDATE bestellung SET status = 'storniert' WHERE bestellung_id = 8; -------------
+*/
