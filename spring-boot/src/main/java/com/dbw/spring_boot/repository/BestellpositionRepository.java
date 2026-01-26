@@ -5,6 +5,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class BestellpositionRepository {
 
@@ -14,6 +16,22 @@ public class BestellpositionRepository {
     public BestellpositionRepository(JdbcTemplate jdbcTemplate, ProduktRepository produktRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.produktRepository = produktRepository;
+    }
+
+    public List<Bestellposition> findAll() {
+        String sql = "SELECT bestellposition.position_id, bestellposition.bestellung_id, " +
+                "bestellposition.sku, bestellposition.menge, (bestellposition.menge * produkt.preis) AS gesamtpreis " +
+                "FROM bestellposition JOIN produkt " +
+                "ON bestellposition.sku = produkt.sku";
+        List<Bestellposition> bestellpositionen = jdbcTemplate.query(sql, (rs, row) ->
+                new Bestellposition(
+                        rs.getInt("position_id"),
+                        rs.getInt("bestellung_id"),
+                        rs.getString("sku"),
+                        rs.getInt("menge"),
+                        rs.getDouble("gesamtpreis")
+                ));
+        return bestellpositionen;
     }
 
     public Bestellposition findById(int id) {
