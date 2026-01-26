@@ -5,6 +5,8 @@ import com.dbw.spring_boot.repository.AdresseRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class AdresseController {
 
@@ -15,11 +17,16 @@ public class AdresseController {
     }
 
     @GetMapping("/adressen")
-    public ResponseEntity<?> getAdresse(@RequestParam Integer id) {
-        Adresse adresse = adresseRepository.findbyId(id);
-        if (adresse != null) {
-            return ResponseEntity.ok(adresse);
-        } else return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> getAdresse(@RequestParam(required = false) Integer id) {
+        if (id != null) {
+            Adresse adresse = adresseRepository.findbyId(id);
+            if (adresse != null) {
+                return ResponseEntity.ok(adresse);
+            } else return ResponseEntity.badRequest().build();
+        } else {
+            List<Adresse> adressen = adresseRepository.findAll();
+            return ResponseEntity.ok(adressen);
+        }
     }
 
     @PostMapping("/adressen")

@@ -17,6 +17,21 @@ public class AdresseRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public List<Adresse> findAll() {
+        String sql = "SELECT * FROM adresse";
+        List<Adresse> adressen = jdbcTemplate.query(sql, (rs, row) ->
+                new Adresse(
+                        rs.getInt("adresse_id"),
+                        rs.getBoolean("aktiv"),
+                        rs.getString("strasse"),
+                        rs.getString("hausnummer"),
+                        rs.getInt("plz"),
+                        rs.getString("ort"),
+                        rs.getString("land")
+                ));
+        return adressen;
+    }
+
     public List<AdresseTypDaten> findAdressenByKundeId(int kundeId) {
         String sql = "SELECT adresse.adresse_id, adresse.aktiv, adresse.strasse, " +
                 "adresse.hausnummer, adresse.plz, adresse.ort, adresse.land, " +
